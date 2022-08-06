@@ -15,7 +15,7 @@ describe Drivy::RentalsView do
         price_per_day: 100,
         price_per_km: 2
       )
-      Drivy::Rental.create(
+      Drivy::FlatPriceScaleRental.create(
         id: 1,
         car_id: 1,
         start_date: Date.today,

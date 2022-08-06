@@ -2,7 +2,7 @@
 
 require_relative '../lib/drivy'
 
-Drivy::RentalsController.save_rentals(
+Drivy::FlatPriceScaleRentalsController.rentals(
   input_path: 'data/input.json',
   output_path: 'data/output.json'
 )

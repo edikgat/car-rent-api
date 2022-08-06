@@ -1,12 +1,16 @@
 # frozen_string_literal: true
 
 module Drivy
-  class Rental < BaseModel
+  class BaseRental < BaseModel
     OVERBOOKING_ERROR_MESSAGE = 'Overbooking is not allowed'
 
     attr_reader :id, :car_id, :start_date, :end_date, :distance
 
     belongs_to :car
+
+    def self.repository_class
+      RentalsRepository
+    end
 
     def initialize(id:, car_id:, start_date:, end_date:, distance:)
       @id = id
@@ -21,8 +25,7 @@ module Drivy
     end
 
     def price
-      (rent_days * car.price_per_day) +
-        (distance * car.price_per_km)
+      raise NotImplementedError
     end
 
     def valid?

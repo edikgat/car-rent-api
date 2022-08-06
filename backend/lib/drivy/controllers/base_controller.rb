@@ -17,5 +17,7 @@ module Drivy
         puts "#{e.class} #{e.message}"
       end
     end
+
+    private_class_method :new
   end
 end

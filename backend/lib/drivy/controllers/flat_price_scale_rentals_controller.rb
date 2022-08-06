@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 module Drivy
-  class RentalsController < BaseController
+  class FlatPriceScaleRentalsController < BaseController
     class << self
-      def save_rentals(input_path:, output_path:)
+      def rentals(input_path:, output_path:)
         process_files(input_path, output_path) do |params|
           CarsBuilder.build_for(params['cars'])
-          RentalsBuilder.build_for(params['rentals'])
+          RentalsBuilder.build_for(params['rentals'], rental_class: FlatPriceScaleRental)
 
           RentalsView.represent_for(RentalsRepository.all, with: RentalPresenter)
         end

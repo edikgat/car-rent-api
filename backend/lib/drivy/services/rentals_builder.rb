@@ -4,17 +4,18 @@ module Drivy
   class RentalsBuilder
     DATE_PATTERN = '%Y-%m-%d'
 
-    def self.build_for(rentals_data)
-      new(rentals_data).build
+    def self.build_for(rentals_data, rental_class:)
+      new(rentals_data, rental_class).build
     end
 
-    def initialize(rentals_data)
+    def initialize(rentals_data, rental_class)
       @rentals_data = rentals_data
+      @rental_class = rental_class
     end
 
     def build
       rentals_data.each do |rental_data|
-        Drivy::Rental.create(
+        rental_class.create(
           id: rental_data['id'],
           car_id: rental_data['car_id'],
           start_date: parse_date_for(rental_data['start_date']),
@@ -31,7 +32,7 @@ module Drivy
         Date.strptime(date_string, DATE_PATTERN)
     end
 
-    attr_reader :rentals_data
+    attr_reader :rentals_data, :rental_class
 
     private_class_method :new
   end

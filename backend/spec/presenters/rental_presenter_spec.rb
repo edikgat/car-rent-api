@@ -5,7 +5,7 @@ describe Drivy::RentalPresenter do
     subject(:presenter) { described_class.represent_for(rental) }
 
     let(:rental) do
-      Drivy::Rental.new(
+      Drivy::FlatPriceScaleRental.new(
         id: 1,
         car_id: 1,
         start_date: Date.today,

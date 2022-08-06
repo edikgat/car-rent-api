@@ -1,38 +1,13 @@
 # frozen_string_literal: true
 
-describe Drivy::Rental do
-  subject(:rental) { described_class.new(model_data) }
-
-  let(:model_data) do
-    {
-      id: id,
-      car_id: car_id,
-      start_date: start_date,
-      end_date: end_date,
-      distance: distance
-    }
-  end
-  let(:id) { 1 }
-  let(:car_id) { 1 }
-  let(:distance) { 2 }
-  let(:start_date) { Date.today }
-  let(:end_date) { Date.today + 10 }
-
-  before do
-    Drivy::Car.create(
-      id: 1,
-      price_per_day: 100,
-      price_per_km: 2
-    )
-  end
-
+shared_examples 'rental model' do
   describe '.create' do
     subject(:create_rental) { described_class.create(model_data) }
 
-    let(:added_rental) { Drivy::RentalsRepository.all.last }
+    let(:added_rental) { described_class.repository.entries.last }
 
     it 'adds new model to repository' do
-      expect { create_rental }.to change { Drivy::RentalsRepository.all.size }.by(1)
+      expect { create_rental }.to change { described_class.repository.entries.size }.by(1)
     end
 
     it 'adds a model with correct params to repository' do
@@ -92,17 +67,11 @@ describe Drivy::Rental do
       end
 
       it_behaves_like 'raises an validation error',
-                      Regexp.new(Drivy::Rental::OVERBOOKING_ERROR_MESSAGE)
+                      Regexp.new(Drivy::BaseRental::OVERBOOKING_ERROR_MESSAGE)
     end
 
     context 'when all parameters valid' do
       it_behaves_like 'be valid'
-    end
-  end
-
-  describe '#price' do
-    it 'returns expected price' do
-      expect(rental.price).to eq(1104)
     end
   end
 end

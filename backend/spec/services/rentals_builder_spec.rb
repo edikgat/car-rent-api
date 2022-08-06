@@ -2,7 +2,7 @@
 
 describe Drivy::RentalsBuilder do
   describe '.build_for' do
-    subject(:builder) { described_class.build_for([rental_data]) }
+    subject(:builder) { described_class.build_for([rental_data], rental_class: Drivy::FlatPriceScaleRental) }
 
     let(:rental_data) do
       { 'id' => id,
