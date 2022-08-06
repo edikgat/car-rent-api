@@ -2,6 +2,8 @@
 
 module Drivy
   class Car < BaseModel
+    PRICE_PER_DATE_VALUE_ERROR_MESSAGE = 'Should be more than or equal to 100'
+
     attr_reader :id, :price_per_day, :price_per_km
 
     def initialize(id:, price_per_day:, price_per_km:)
@@ -20,7 +22,16 @@ module Drivy
       validates_positive_integer_of :price_per_km
 
       validates_uniqueness_of :id
+      validate_price_per_day_value
+
       true
+    end
+
+    private
+
+    def validate_price_per_day_value
+      price_per_day < 100 &&
+        raise_validation_error(:price, PRICE_PER_DATE_VALUE_ERROR_MESSAGE)
     end
   end
 end

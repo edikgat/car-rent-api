@@ -9,8 +9,8 @@ describe Drivy::Car do
     }
   end
   let(:id) { 1 }
-  let(:price_per_day) { 100 }
-  let(:price_per_km) { 2 }
+  let(:price_per_day) { 1000 }
+  let(:price_per_km) { 20 }
 
   describe '.create' do
     subject(:create_car) { described_class.create(model_data) }
@@ -50,6 +50,13 @@ describe Drivy::Car do
 
       it_behaves_like 'raises an validation error',
                       Regexp.new(Drivy::BaseModel::UNIQUE_ERROR_MESSAGE)
+    end
+
+    context 'when price per date is less than 100' do
+      let(:price_per_day) { 50 }
+
+      it_behaves_like 'raises an validation error',
+                      Regexp.new(Drivy::Car::PRICE_PER_DATE_VALUE_ERROR_MESSAGE)
     end
 
     context 'when all parameters valid' do

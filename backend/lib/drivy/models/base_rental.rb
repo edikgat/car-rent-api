@@ -28,6 +28,13 @@ module Drivy
       raise NotImplementedError
     end
 
+    def comission
+      @comission ||= RentalComission.new(
+        price: price,
+        rent_days: rent_days
+      )
+    end
+
     def valid?
       validates_presence_of :id
       validates_presence_of :car_id

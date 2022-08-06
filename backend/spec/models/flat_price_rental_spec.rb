@@ -21,14 +21,14 @@ describe Drivy::FlatPriceScaleRental do
   before do
     Drivy::Car.create(
       id: 1,
-      price_per_day: 100,
-      price_per_km: 2
+      price_per_day: 1000,
+      price_per_km: 20
     )
   end
 
   describe '#price' do
     it 'returns expected price' do
-      expect(rental.price).to eq(1104)
+      expect(rental.price).to eq(11_040)
     end
   end
 

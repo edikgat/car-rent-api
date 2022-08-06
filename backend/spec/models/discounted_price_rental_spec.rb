@@ -27,6 +27,24 @@ describe Drivy::DiscountedPriceScaleRental do
     )
   end
 
+  describe '#comission' do
+    it 'calculates insurance_fee' do
+      expect(rental.comission.insurance_fee).to eq(2116)
+    end
+
+    it 'calculates total_fee' do
+      expect(rental.comission.total_fee).to eq(4233)
+    end
+
+    it 'calculates assistance_fee' do
+      expect(rental.comission.assistance_fee).to eq(1000)
+    end
+
+    it 'calculates drivy_fee' do
+      expect(rental.comission.drivy_fee).to eq(1117)
+    end
+  end
+
   describe '#price' do
     context 'when one day' do
       let(:rent_days) { 1 }
