@@ -27,55 +27,27 @@ describe Drivy::DiscountedPriceScaleRental do
     )
   end
 
-  describe '#comission' do
-    it 'calculates insurance_fee' do
-      expect(rental.comission.insurance_fee).to eq(2116)
-    end
-
-    it 'calculates total_fee' do
-      expect(rental.comission.total_fee).to eq(4233)
-    end
-
-    it 'calculates assistance_fee' do
-      expect(rental.comission.assistance_fee).to eq(1000)
-    end
-
-    it 'calculates drivy_fee' do
-      expect(rental.comission.drivy_fee).to eq(1117)
+  describe '#price_details' do
+    it 'calculates fee' do
+      expect(rental.price_details.total_fee).to eq(4233)
     end
   end
 
   describe '#price' do
-    context 'when one day' do
-      let(:rent_days) { 1 }
+    let(:rent_days) { 1 }
 
-      it 'returns expected price' do
-        expect(rental.price).to eq(2110)
-      end
+    it 'returns expected price' do
+      expect(rental.price).to eq(2110)
     end
+  end
 
-    context 'when 3 days' do
-      let(:rent_days) { 3 }
-
-      it 'returns expected price' do
-        expect(rental.price).to eq(5510)
-      end
-    end
-
-    context 'when 7 days' do
-      let(:rent_days) { 7 }
-
-      it 'returns expected price' do
-        expect(rental.price).to eq(9910)
-      end
-    end
-
-    context 'when 11 days' do
-      let(:rent_days) { 11 }
-
-      it 'returns expected price' do
-        expect(rental.price).to eq(11_110)
-      end
+  describe '#payment_actions' do
+    it 'returns payment actions' do
+      expect(rental.payment_actions.driver).to eq(
+        amount: 14_110,
+        type: :debit,
+        who: :driver
+      )
     end
   end
 

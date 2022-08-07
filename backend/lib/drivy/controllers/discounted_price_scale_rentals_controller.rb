@@ -11,6 +11,10 @@ module Drivy
         process_rentals_with(input_path, output_path, presenter: RentalWithComissionPresenter)
       end
 
+      def rentals_with_payment_actions(input_path:, output_path:)
+        process_rentals_with(input_path, output_path, presenter: RentalWithPaymentActionsPresenter)
+      end
+
       private
 
       def process_rentals_with(input_path, output_path, presenter:)

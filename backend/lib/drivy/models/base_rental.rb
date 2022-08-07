@@ -28,11 +28,15 @@ module Drivy
       raise NotImplementedError
     end
 
-    def comission
-      @comission ||= RentalComission.new(
+    def price_details
+      @price_details ||= RentalPriceDetails.new(
         price: price,
         rent_days: rent_days
       )
+    end
+
+    def payment_actions
+      @payment_actions ||= RentalPaymentActions.new(price_details)
     end
 
     def valid?

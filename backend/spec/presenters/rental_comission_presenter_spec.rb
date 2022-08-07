@@ -5,7 +5,7 @@ describe Drivy::RentalComissionPresenter do
     subject(:presenter) { described_class.represent_for(comission) }
 
     let(:comission) do
-      Drivy::RentalComission.new(price: 3000, rent_days: 1)
+      Drivy::RentalPriceDetails.new(price: 3000, rent_days: 1)
     end
 
     it 'represents comission data' do

@@ -32,5 +32,21 @@ describe Drivy::FlatPriceScaleRental do
     end
   end
 
+  describe '#price_details' do
+    it 'calculates fee' do
+      expect(rental.price_details.total_fee).to eq(3312)
+    end
+  end
+
+  describe '#payment_actions' do
+    it 'returns payment actions' do
+      expect(rental.payment_actions.driver).to eq(
+        amount: 11_040,
+        type: :debit,
+        who: :driver
+      )
+    end
+  end
+
   it_behaves_like 'rental model'
 end

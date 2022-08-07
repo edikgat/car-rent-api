@@ -4,7 +4,7 @@ module Drivy
   class RentalWithComissionPresenter < RentalPresenter
     def self.represent_for(rental)
       super.merge(
-        commission: RentalComissionPresenter.represent_for(rental.comission)
+        commission: RentalComissionPresenter.represent_for(rental.price_details)
       )
     end
   end
