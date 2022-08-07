@@ -26,7 +26,7 @@ describe Drivy::RentalsRepository do
     it_behaves_like 'repository'
   end
 
-  context 'when DiscountedPriceScaleRental' do
+  context 'when DiscountedPriceScaleRental model' do
     let(:model) do
       Drivy::DiscountedPriceScaleRental.new(
         id: model_id,

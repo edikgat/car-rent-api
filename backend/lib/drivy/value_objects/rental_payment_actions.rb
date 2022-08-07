@@ -25,7 +25,7 @@ module Drivy
       {
         who: DRIVER_ACTION,
         type: DRIVER_ACTION_TYPE,
-        amount: price_details.price
+        amount: price_details.total_price
       }
     end
 

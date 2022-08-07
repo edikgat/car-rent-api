@@ -29,7 +29,7 @@ describe Drivy::RentalsBuilder do
       context 'when invalid id' do
         let(:id) { nil }
 
-        it 'raises an rental validation error' do
+        it 'raises a validation error' do
           expect { builder }.to raise_error(Drivy::BaseModel::ValidationError)
         end
       end

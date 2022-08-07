@@ -8,6 +8,7 @@ module Drivy
     POSITIVE_INTEGER_VALIDATION_ERROR_MESSAGE = 'Should be positive integer'
     DATE_ERROR_MESSAGE = 'Should be date'
     UNIQUE_ERROR_MESSAGE = 'Should be unique'
+    INCLUSION_ERROR_MESSAGE = 'Not included in the list'
 
     class << self
       def create(args = {})
@@ -24,10 +25,22 @@ module Drivy
         :id
       end
 
-      def belongs_to(assiciation_name)
+      def has_many(assiciation_name, class_name:, foreign_key:)
         assiciation_module = Module.new do
           define_method assiciation_name do
-            self.class.model_class_for(assiciation_name).repository.find do |model|
+            self.class.reposotory_for_model_name(class_name).select do |model|
+              primary_key == model.public_send(foreign_key)
+            end
+          end
+        end
+        include(assiciation_module)
+        assiciation_name
+      end
+
+      def belongs_to(assiciation_name, class_name:)
+        assiciation_module = Module.new do
+          define_method assiciation_name do
+            self.class.reposotory_for_model_name(class_name).find do |model|
               model.primary_key == public_send("#{assiciation_name}_id")
             end
           end
@@ -36,8 +49,8 @@ module Drivy
         assiciation_name
       end
 
-      def model_class_for(assiciation_name)
-        Object.const_get("Drivy::#{assiciation_name.to_s.capitalize}")
+      def reposotory_for_model_name(model_name)
+        Object.const_get("Drivy::#{model_name}").repository
       end
 
       private
@@ -83,13 +96,17 @@ module Drivy
       raise_validation_error(key, DATE_ERROR_MESSAGE) unless value_for(key).is_a?(Date)
     end
 
+    def validates_inclusion_of(key, options:)
+      raise_validation_error(key, INCLUSION_ERROR_MESSAGE) unless options.include?(value_for(key))
+    end
+
     def validates_uniqueness_of(key)
       repository.any? { |model| model != self && model.public_send(key) == value_for(key) } &&
         raise_validation_error(key, UNIQUE_ERROR_MESSAGE)
     end
 
     def raise_validation_error(key, message)
-      raise ValidationError, "#{self.class.name}: #{primary_key}, #{key}: #{message}"
+      raise ValidationError, "#{self.class.name}: #{key}: #{message}"
     end
 
     def value_for(key)

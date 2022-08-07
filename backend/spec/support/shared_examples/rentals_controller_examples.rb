@@ -3,10 +3,14 @@
 shared_examples 'rentals controller' do
   let(:input_path) { 'input_path.json' }
   let(:output_path) { 'output_path.json' }
-  let(:input_json) { { 'cars' => [car_json], 'rentals' => [rental_json] } }
-  let(:input_data) { input_json.to_json }
-  let(:car_json) { { 'id' => 1, 'price_per_day' => 2000, 'price_per_km' => 10 } }
-  let(:rental_json) do
+  let(:input_hash) do
+    { 'cars' => [car_hash],
+      'rentals' => [rental_hash],
+      'options' => options_array }
+  end
+  let(:input_json) { input_hash.to_json }
+  let(:car_hash) { { 'id' => 1, 'price_per_day' => 2000, 'price_per_km' => 10 } }
+  let(:rental_hash) do
     { 'id' => 1,
       'car_id' => 1,
       'distance' => 100,
@@ -17,7 +21,7 @@ shared_examples 'rentals controller' do
   let(:expected_output_file_data) { expected_output_hash.to_json }
 
   before do
-    allow(File).to receive(:read).and_return(input_data)
+    allow(File).to receive(:read).and_return(input_json)
     allow(File).to receive(:write)
   end
 
@@ -70,21 +74,21 @@ shared_examples 'rentals controller' do
     end
 
     context 'when invalid car data' do
-      let(:car_json) { { 'invalid' => 'invalid' } }
+      let(:car_hash) { { 'invalid' => 'invalid' } }
 
       it_behaves_like 'reads input file'
       it_behaves_like 'processes invalid input'
     end
 
     context 'when invalid rental data' do
-      let(:rental_json) { { 'invalid' => 'invalid' } }
+      let(:rental_hash) { { 'invalid' => 'invalid' } }
 
       it_behaves_like 'reads input file'
       it_behaves_like 'processes invalid input'
     end
 
     context 'when file contains invalid json' do
-      let(:input_data) { 'invalid' }
+      let(:input_json) { 'invalid' }
 
       it_behaves_like 'reads input file'
       it_behaves_like 'processes invalid input'

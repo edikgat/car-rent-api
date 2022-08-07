@@ -4,12 +4,19 @@ describe Drivy::RentalPaymentActions do
   subject(:payment_actions) { described_class.new(price_details) }
 
   let(:price_details) do
-    Drivy::RentalPriceDetails.new(price: 27_800, rent_days: 12)
+    Drivy::RentalPriceDetails.new(
+      price_per_day: 2000,
+      price_per_km: 10,
+      distance: 280,
+      rent_days: 2,
+      option_types: ['additional_insurance'],
+      price_calculator_class: Drivy::FlatScaleRentalPrice
+    )
   end
 
   it 'returns driver action' do
     expect(payment_actions.driver).to eq(
-      amount: 27_800,
+      amount: 8800,
       type: :debit,
       who: :driver
     )
@@ -17,7 +24,7 @@ describe Drivy::RentalPaymentActions do
 
   it 'returns owner action' do
     expect(payment_actions.owner).to eq(
-      amount: 19_460,
+      amount: 4760,
       type: :credit,
       who: :owner
     )
@@ -25,7 +32,7 @@ describe Drivy::RentalPaymentActions do
 
   it 'returns insurance action' do
     expect(payment_actions.insurance).to eq(
-      amount: 4170,
+      amount: 1020,
       type: :credit,
       who: :insurance
     )
@@ -33,7 +40,7 @@ describe Drivy::RentalPaymentActions do
 
   it 'returns assistance action' do
     expect(payment_actions.assistance).to eq(
-      amount: 1200,
+      amount: 200,
       type: :credit,
       who: :assistance
     )
@@ -41,7 +48,7 @@ describe Drivy::RentalPaymentActions do
 
   it 'returns drivy action' do
     expect(payment_actions.drivy).to eq(
-      amount: 2970,
+      amount: 2820,
       type: :credit,
       who: :drivy
     )

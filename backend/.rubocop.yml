@@ -14,6 +14,21 @@ Metrics/AbcSize:
 Metrics/MethodLength:
   Max: 20
 
+Metrics/CyclomaticComplexity:
+  Max: 10
+
+Metrics/ParameterLists:
+  Max: 8
+
+Metrics/BlockLength:
+  Enabled: true
+  Exclude:
+    - spec/**/*
+
+Naming/PredicateName:
+  Exclude:
+    - 'lib/drivy/models/base_model.rb'
+
 Style/Documentation:
   Enabled: false
 
@@ -26,16 +41,8 @@ Lint/EmptyFile:
 Lint/EmptyClass:
   Enabled: false
 
-Metrics/CyclomaticComplexity:
-  Max: 10
-
 Lint/MissingSuper:
   Enabled: false
-
-Metrics/BlockLength:
-  Enabled: true
-  Exclude:
-    - spec/**/*
 
 RSpec/ExampleLength:
   Max: 10

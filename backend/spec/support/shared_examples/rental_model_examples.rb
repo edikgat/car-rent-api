@@ -21,6 +21,35 @@ shared_examples 'rental model' do
     end
   end
 
+  describe '#rental_options' do
+    let(:rental) { described_class.create(model_data) }
+
+    context 'when connected rental options does not exist' do
+      it 'returns blank array' do
+        expect(rental.rental_options).to eq([])
+      end
+    end
+
+    context 'when connected rental options exists' do
+      let(:rental_option) do
+        Drivy::RentalOption.create(
+          id: 1,
+          rental_id: 1,
+          type: 'gps'
+        )
+      end
+
+      before do
+        rental
+        rental_option
+      end
+
+      it 'returns connected rental options' do
+        expect(rental.rental_options).to eq([rental_option])
+      end
+    end
+  end
+
   include_examples 'models validations'
 
   describe '#valid?' do
@@ -54,7 +83,7 @@ shared_examples 'rental model' do
                       Regexp.new(Drivy::BaseModel::POSITIVE_INTEGER_VALIDATION_ERROR_MESSAGE)
     end
 
-    context 'when car with given id is not exist' do
+    context 'when car with given id does not exist' do
       let(:car_id) { 100_500 }
 
       it_behaves_like 'raises an validation error',

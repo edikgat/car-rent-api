@@ -26,15 +26,9 @@ describe Drivy::FlatPriceScaleRental do
     )
   end
 
-  describe '#price' do
-    it 'returns expected price' do
-      expect(rental.price).to eq(11_040)
-    end
-  end
-
   describe '#price_details' do
-    it 'calculates fee' do
-      expect(rental.price_details.total_fee).to eq(3312)
+    it 'calculates total price' do
+      expect(rental.price_details.total_price).to eq(11_040)
     end
   end
 

@@ -30,6 +30,37 @@ describe Drivy::Car do
     end
   end
 
+  describe '#rentals' do
+    let(:car) { described_class.create(model_data) }
+
+    context 'when connected rentals does not exist' do
+      it 'returns blank array' do
+        expect(car.rentals).to eq([])
+      end
+    end
+
+    context 'when connected rentals exists' do
+      let(:rental) do
+        Drivy::DiscountedPriceScaleRental.create(
+          id: 1,
+          car_id: 1,
+          start_date: Date.today,
+          end_date: Date.today + 1,
+          distance: 10
+        )
+      end
+
+      before do
+        car
+        rental
+      end
+
+      it 'returns connected rental options' do
+        expect(car.rentals).to eq([rental])
+      end
+    end
+  end
+
   include_examples 'models validations'
 
   describe '#valid?' do

@@ -5,7 +5,7 @@ module Drivy
     def self.represent_for(rental)
       {
         id: rental.id,
-        price: rental.price
+        price: rental.price_details.total_price
       }
     end
   end

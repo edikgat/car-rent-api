@@ -6,10 +6,13 @@ module Drivy
 
     attr_reader :id, :car_id, :start_date, :end_date, :distance
 
-    belongs_to :car
+    belongs_to :car, class_name: 'Car'
+    has_many :rental_options, class_name: 'RentalOption', foreign_key: 'rental_id'
 
-    def self.repository_class
-      RentalsRepository
+    class << self
+      def repository_class
+        RentalsRepository
+      end
     end
 
     def initialize(id:, car_id:, start_date:, end_date:, distance:)
@@ -24,14 +27,22 @@ module Drivy
       (end_date - start_date).to_i + 1
     end
 
-    def price
+    def price_calculator_class
       raise NotImplementedError
+    end
+
+    def option_types
+      rental_options.map(&:type)
     end
 
     def price_details
       @price_details ||= RentalPriceDetails.new(
-        price: price,
-        rent_days: rent_days
+        option_types: option_types,
+        rent_days: rent_days,
+        price_per_day: car.price_per_day,
+        price_per_km: car.price_per_km,
+        distance: distance,
+        price_calculator_class: price_calculator_class
       )
     end
 

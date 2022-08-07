@@ -7,7 +7,7 @@ describe Drivy::CarsBuilder do
     context 'when invalid data' do
       let(:car_data) { { 'id' => 1 } }
 
-      it 'raises an car validation error' do
+      it 'raises a validation error' do
         expect { builder }.to raise_error(Drivy::BaseModel::ValidationError)
       end
     end

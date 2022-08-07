@@ -6,6 +6,8 @@ module Drivy
 
     attr_reader :id, :price_per_day, :price_per_km
 
+    has_many :rentals, class_name: 'BaseRental', foreign_key: 'car_id'
+
     def initialize(id:, price_per_day:, price_per_km:)
       @id = id
       @price_per_day = price_per_day

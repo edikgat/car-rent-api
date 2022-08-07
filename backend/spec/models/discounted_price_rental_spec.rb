@@ -28,16 +28,8 @@ describe Drivy::DiscountedPriceScaleRental do
   end
 
   describe '#price_details' do
-    it 'calculates fee' do
-      expect(rental.price_details.total_fee).to eq(4233)
-    end
-  end
-
-  describe '#price' do
-    let(:rent_days) { 1 }
-
-    it 'returns expected price' do
-      expect(rental.price).to eq(2110)
+    it 'calculates total price' do
+      expect(rental.price_details.total_price).to eq(14_110)
     end
   end
 

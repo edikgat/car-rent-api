@@ -9,6 +9,7 @@ describe Drivy::FlatPriceScaleRentalsController do
       )
     end
 
+    let(:options_array) { [] }
     let(:expected_output_hash) do
       {
         rentals: [
