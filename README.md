@@ -1,7 +1,7 @@
 # Challenges
 
 - [Backend](https://github.com/edikgat/car-rent-api/tree/master/backend)
-- [Implementation Readme](https://github.com/edikgat/car-rent-api/blob/master/backend/IMPLEMENTATION_README.md)
+- [Implementation README](https://github.com/edikgat/car-rent-api/blob/master/backend/IMPLEMENTATION_README.md)
 
 ### Acknowledgements
 

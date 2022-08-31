@@ -1,6 +1,6 @@
 
 # Drivy
-- IMPORTANT: Starting from level2 drivy team incorrectly calculates the discounts, that is why all the `output.json` will be not the same as `expected_output.json`, for example in their calculations price with 10% discount, from 4000 is 3800. I used correct calculations and have the 3600 there.
+- IMPORTANT: Starting from level2 drivy team incorrectly calculates the discounts, that is why I fixed this issue by updating the expected outputs.
 - Model–View–Controller As Architectural Pattern
 - Plain Ruby (Gems were added just for dev and test purposes, no runtime dependencies)
 - Data Model is Ready To Be Used With SQL Storage (Singleton repositories here used to store models collections)
